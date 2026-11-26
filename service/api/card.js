@@ -1,7 +1,9 @@
 // Ansai GitHub Stats — self-hosted, full-data (public + private) bento glass card.
 // Serves an SVG computed live from the GitHub API using GITHUB_TOKEN (server-side only).
-const LOGIN = "IamAmasai";
-const NAME = "Melchizedek Amasai";
+const LOGIN = process.env.STATS_LOGIN || "IamAmasai";
+const NAME = process.env.STATS_NAME || "Melchizedek Amasai";
+const TAGLINE = process.env.STATS_TAGLINE || "Software engineer & systems thinker — founder, Ansai Technologies.";
+const TAGLINE2 = process.env.STATS_TAGLINE2 || "Building agentic infrastructure from Nairobi.";
 
 async function gh(path, token, isGraphql, body) {
   const r = await fetch("https://api.github.com" + path, {
@@ -103,8 +105,8 @@ ${panel(28, 28, 300, 408, `
 ${panel(344, 28, 552, 196, `
   ${K("GITHUB · @" + LOGIN.toUpperCase())}
   <text y="52" font-size="37" font-weight="800" fill="#F4EFE6">${esc(NAME)}</text>
-  <text y="88" font-size="15.5" fill="#A7AEC2">Software engineer &amp; systems thinker — founder, Ansai Technologies.</text>
-  <text y="112" font-size="15.5" fill="#A7AEC2">Building agentic infrastructure from Nairobi.</text>`)}
+  <text y="88" font-size="15.5" fill="#A7AEC2">${esc(TAGLINE)}</text>
+  <text y="112" font-size="15.5" fill="#A7AEC2">${esc(TAGLINE2)}</text>`)}
 ${panel(912, 28, 300, 196, `${K("COMMITS · ALL TIME")}${BIG(d.commits.toLocaleString("en-US"), true)}${SUB(["Including private repos — the", "public card sees a fraction"])}`)}
 ${panel(344, 240, 268, 196, `${K("CURRENT STREAK")}${BIG(d.streak + " days")}${SUB(["Longest streak too —", "still running"])}`)}
 ${panel(628, 240, 268, 196, `${K("PULL REQUESTS")}${BIG(d.prs, true)}${SUB(["Across personal +", "org repos"])}`)}
