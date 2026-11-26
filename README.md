@@ -16,7 +16,7 @@ Public stats cards only see public repositories. For many engineers the real wor
 - A gold heatmap of the last year of contributions
 
 ## How it works
-One serverless function (`service/api/card.js`) does everything:
+One serverless function (`api/card.js`) does everything:
 1. Calls the GitHub GraphQL API (contributions, calendar, repositories, languages) and the search API (all-time commits / PRs / issues) with your token.
 2. Computes the totals, streaks, language shares and grade.
 3. Returns an SVG. A CDN cache header (6 hours) keeps it fast and the API quiet.
@@ -25,7 +25,29 @@ The token never leaves the server. The card shows **totals only** — never priv
 
 ## Set up your own
 
-### 1. Get the code
+### Fastest — one-click deploy
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FIamAmasai%2Fgithub-stats-card&env=GITHUB_TOKEN,STATS_LOGIN,STATS_NAME,STATS_TAGLINE&envDescription=Your%20GitHub%20token%20(classic%2C%20repo%20scope%20only)%20and%20the%20name%20details%20shown%20on%20your%20card.&project-name=github-stats-card)
+
+Vercel will ask for the environment variables listed in step 4 below — have your token (step 2) ready.
+
+### Or — run the setup script
+One command answers four prompts (username, name, tagline, token) and deploys for you:
+
+```bash
+# macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/IamAmasai/github-stats-card/main/setup.sh | bash
+```
+
+```powershell
+# Windows (PowerShell)
+irm https://raw.githubusercontent.com/IamAmasai/github-stats-card/main/setup.ps1 | iex
+```
+
+The scripts need `git` and Node.js (`npx`) installed, and a free Vercel account — the Vercel CLI will ask you to sign in the first time. The token is typed hidden, passed straight to Vercel's encrypted env store, and never written to disk.
+
+### Or — set it up by hand
+
+#### 1. Get the code
 Fork this repo, or clone it and push it to your own GitHub account.
 
 ### 2. Create a GitHub token
@@ -38,10 +60,9 @@ The service only reads. Use a **classic** personal access token:
 
 ### 3. Deploy to Vercel
 - [vercel.com](https://vercel.com) → Add New → Project → import the repo
-- **Root Directory: `service`** (this is important — the deployable app lives there)
-- Framework preset: Other. Deploy.
+- Framework preset: Other. Deploy. (The app lives at the repo root — no root-directory setting needed.)
 
-Or deploy the `service/` folder with the Vercel CLI / API from any machine.
+Or deploy the repo root with the Vercel CLI / API from any machine.
 
 ### 4. Add the environment variables
 In the Vercel project → Settings → Environment Variables (Production):
@@ -69,10 +90,11 @@ In your GitHub profile README (or any Markdown / HTML page):
 ```
 
 ## Repository layout
-- `service/api/card.js` — the whole service: fetch, compute, render (SVG)
-- `service/index.html` — the landing page
-- `service/vercel.json` — routes `/api/card.svg` to the function
-- `build.py` + `data.json` — the offline prototype that produced the first render (kept for reference)
+- `api/card.js` — the whole service: fetch, compute, render (SVG)
+- `index.html` — the landing page
+- `vercel.json` — routes `/api/card.svg` to the function
+- `setup.sh` / `setup.ps1` — the one-command setup scripts
+- `prototype/` — the offline prototype that produced the first render (kept for reference)
 
 ## Privacy notes
 - The token is read-only in practice: the code only issues GET/GraphQL read queries.
