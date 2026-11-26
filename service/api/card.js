@@ -109,7 +109,7 @@ ${panel(912, 28, 300, 196, `${K("COMMITS · ALL TIME")}${BIG(d.commits.toLocaleS
 ${panel(344, 240, 268, 196, `${K("CURRENT STREAK")}${BIG(d.streak + " days")}${SUB(["Longest streak too —", "still running"])}`)}
 ${panel(628, 240, 268, 196, `${K("PULL REQUESTS")}${BIG(d.prs, true)}${SUB(["Across personal +", "org repos"])}`)}
 ${panel(28, 452, 584, 196, `${K("LANGUAGES · BY CODE VOLUME")}${langBar}${langLegend}`)}
-${panel(628, 452, 268, 196, `${K("CONTRIBUTIONS · LAST YEAR")}${BIG(d.contrib.toLocaleString("en-US"))}${SUB([d.activeDays + " active days · " + d.repos + " repos", "owned · " + d.stars + " stars · " + d.followers + " followers"])}`)}
+${panel(628, 452, 268, 196, `${K("CONTRIBUTIONS · 1 YEAR")}${BIG(d.contrib.toLocaleString("en-US"))}${SUB([d.activeDays + " active days · " + d.repos + " repos", "owned · " + d.stars + " stars · " + d.followers + " followers"])}`)}
 ${panel(28, 664, 1184, 252, `${K("THE YEAR IN COMMITS")}`)}
 ${heat}
 <text x="1212" y="952" text-anchor="end" font-size="12" letter-spacing="2" fill="#7C8499">ANSAI · SELF-HOSTED STATS — PRIVATE WORK COUNTED</text>
